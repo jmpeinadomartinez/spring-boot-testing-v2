@@ -14,17 +14,17 @@
 	<name>spring-boot-testing-v2</name>
 	<description>Demo project for Spring Boot</description>
 
-	<properties>
-		<java.version>1.8</java.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-	</properties>
+<!-- 	<properties> -->
+<!-- 		<java.version>1.8</java.version> -->
+<!-- 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> -->
+<!--         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding> -->
+<!-- 	</properties> -->
 
-<!-- 		<properties>	-->
-<!-- 			<java.version>11</java.version>	-->
-<!-- 			<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>	-->
-<!-- 			<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>	-->
-<!-- 		</properties>	-->
+		<properties>	
+			<java.version>11</java.version>	
+			<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>	
+			<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>	
+		</properties>	
 
 	<dependencies>
 	
@@ -82,24 +82,7 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
-			
-<!-- 			<plugin> -->
-<!--                 <groupId>org.apache.maven.plugins</groupId> -->
-<!--                 <artifactId>maven-surefire-plugin</artifactId> -->
-<!--                 <version>2.19.1</version> -->
-<!--                 <dependencies> -->
-<!--                     <dependency> -->
-<!--                         <groupId>org.junit.platform</groupId> -->
-<!--                         <artifactId>junit-platform-surefire-provider</artifactId> -->
-<!--                         <version>1.1.1</version> -->
-<!--                     </dependency> -->
-<!--                     <dependency> -->
-<!--                         <groupId>org.junit.jupiter</groupId> -->
-<!--                         <artifactId>junit-jupiter-engine</artifactId> -->
-<!--                         <version>5.1.1</version> -->
-<!--                     </dependency> -->
-<!--                 </dependencies> -->
-<!--             </plugin> -->
+
 		</plugins>
 	</build>
 
