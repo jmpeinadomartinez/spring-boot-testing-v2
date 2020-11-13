@@ -13,6 +13,15 @@ Scenario: Consume the APIs in a Happy path scenario
     Then return {amount}*rate
 ```
 
+## Requeriments:
+Java 11
+
+## How to tun:
+mvn spring-boot:run
+
+## How to launch tests:
+mvn clean test
+
 ## References:
 
 https://cucumber.io/docs/gherkin/reference/

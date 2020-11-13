@@ -1,7 +1,10 @@
 package com.jmpm.microservice.service.impl;
 
+import java.math.BigDecimal;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,15 +22,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MyServiceImpl implements MyService {
 	
-    private final static String frankfurterApiUrl = "https://api.frankfurter.app/latest";
-    private final static String exchangeRatesapiUrl = "https://api.exchangeratesapi.io/latest";
-    private final static String ratesApiUrl = "https://api.ratesapi.io/api/latest";
+	@Value("${api.frankfurter}")
+	private String frankfurterApiUrl;
+	
+	@Value("${api.ratesapi}")
+	private String exchangeRatesapiUrl;
+	
+	@Value("${api.exchangeratesapi}")
+	private String ratesApiUrl;  
 	
 	@Autowired
 	private RestTemplate restTemplate;
     
 	@Override
-	public Double convertEurToUsd(double amount) {
+	public String convertEurToUsd(String amount) {
 		
 		try {
 			
@@ -40,26 +48,26 @@ public class MyServiceImpl implements MyService {
 		    ResponseEntity<String> response2 = restTemplate.getForEntity(exchangeRatesapiUrl, String.class);
 		    ResponseEntity<String> response3 = restTemplate.exchange(ratesApiUrl, HttpMethod.GET, request, String.class);
 			
-			Double frankfurterApiUsdRate = extractUSDRate(response1.getBody());
-			Double exchangeApiUsdRate = extractUSDRate(response2.getBody());
-			Double ratesApiUsdRate = extractUSDRate(response3.getBody());
+		    BigDecimal frankfurterApiUsdRate = extractUSDRate(response1.getBody());
+			BigDecimal exchangeApiUsdRate = extractUSDRate(response2.getBody());
+			BigDecimal ratesApiUsdRate = extractUSDRate(response3.getBody());
 
-			return amount * Math.max(frankfurterApiUsdRate, Math.max(exchangeApiUsdRate, ratesApiUsdRate));
-					
+			return frankfurterApiUsdRate.max(exchangeApiUsdRate.max(ratesApiUsdRate)).multiply(new BigDecimal(amount)).toString();
+
 		} catch (Exception e) {
 			log.info("Error to extract USD rate");
 			return null;
 		}
 	}
 
-	private Double extractUSDRate(final String rates) {
+	private BigDecimal extractUSDRate(final String rates) {
 		
 		JSONObject jsonResp = new JSONObject(rates);
 		JSONObject jsonRates = (JSONObject) jsonResp.get("rates");
-		Double dRate = (double) jsonRates.get("USD");
+		Double dRate = (Double) jsonRates.get("USD");
 		log.info(dRate.toString());
 	    
-	    return dRate;
+	    return BigDecimal.valueOf(dRate);
 	}
 
 }
